@@ -3,8 +3,7 @@ Ridiculous Media Search and Play
 
 The objective of this CLI Tool is do a fast search of media files and just play instantly 
 using only native python libraries in a unix-like environment. If you really
-want play something you should consider install some CLI Player like mplayer or
-cvlc.
+want play something you should consider install mplayer or cvlc.
 
 This software don't read ID3 Tags, don't use any type of standard database, and don't play anything
 using librarys like pygst, because as you can see, that is not the objective of

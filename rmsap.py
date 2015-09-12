@@ -37,6 +37,7 @@ if argv[1] == 'build-list':
     import os.path
     proc = subprocess.Popen(['find', argv[2]], stdout=subprocess.PIPE)
     lista = gzip.open(media_path, 'wb')
+    print('Building list, this can take long. Go look your WhatsApp.')
     while True:
         line = proc.stdout.readline()
         if line != '':
@@ -46,6 +47,7 @@ if argv[1] == 'build-list':
         else:
             lista.close()
             break
+    print('Done.')
 
 if argv[1] == 'play':
     from subprocess import call
