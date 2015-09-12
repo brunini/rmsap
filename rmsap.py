@@ -25,11 +25,12 @@ def search_media_path(words):
     result = []
     for path in path_list:
         count = 0
+        name, full_path = path.split(';;rmsap;;')
         for word in words:
-            if word in path.lower():
+            if word in name:
                 count = count + 1
         if count == len(words):
-            result.append(path)
+            result.append(full_path)
     return result
 
 if argv[1] == 'build-list':
@@ -43,7 +44,8 @@ if argv[1] == 'build-list':
         if line != '':
             line = line.rstrip()
             if os.path.splitext(line)[1] in media_types:
-                lista.write(line+'\n')
+                name = line.split('/')[-1].lower()
+                lista.write(name+';;rmsap;;'+line+'\n')
         else:
             lista.close()
             break
@@ -59,7 +61,10 @@ if argv[1] == 'play':
     for path in lista:
             playlist.write(path)
     playlist.close()
-    call(['mplayer', '-playlist', playlist_path])
+    if len(lista) > 0:
+        call(['mplayer', '-playlist', playlist_path])
+    else:
+        print('No matches found')
 
 if argv[1] == 'search':
     words = []
