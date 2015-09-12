@@ -44,7 +44,7 @@ if argv[1] == 'build-list':
         if line != '':
             line = line.rstrip()
             if os.path.splitext(line)[1] in media_types:
-                name = line.split('/')[-1].lower()
+                name = line.strip(argv[2]).lower()
                 lista.write(name+';;rmsap;;'+line+'\n')
         else:
             lista.close()
