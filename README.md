@@ -15,16 +15,23 @@ the application at all.
 rmsap [command] [search patterns]
 
 rmsap play [search patterns]                         - Search media and play.
-rmsap search [search patterns]                       - Search media and print
-paths.
+
+rmsap search [search patterns]                       - Search media and print paths.
+
 rmsap build-list [FULL_PATH_OF_YOUR_MEDIA_FOLDER]    - Build your media list.
+
 
 You can concatenate how many search patterns you need, using just spaces
 between them.
 
 Examples:
+
 rmsap build-list /home/user/Music
+
 rmsap search vivaldi spring
+
 rmsap play chopin nocturne 2 d
+
 rmsap play mozart 40
+
 rmsap play bach
