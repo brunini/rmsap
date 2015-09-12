@@ -10,7 +10,9 @@ This software don't read ID3 Tags, don't use any type of standard database, and 
 using librarys like pygst, because as you can see, that is not the objective of
 the application at all. 
 
-Usage: rmsap [command] [search patterns]
+
+# Usage
+rmsap [command] [search patterns]
 
 rmsap play [search patterns]                         - Search media and play.
 rmsap search [search patterns]                       - Search media and print
