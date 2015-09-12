@@ -1,6 +1,6 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
-from sys import argv
+from sys import argv, exit
 from os import getenv
 import gzip
 
@@ -10,16 +10,33 @@ media_types = ['.asx', '.dts', '.gxf', '.m2v', '.m3u', '.m4v', '.mpeg1', '.mpeg2
                '.vob', '.xspf', '.dat', '.bin', '.ifo', '.part', '.3g2', '.avi', '.mpeg', '.mpg',
                '.flac', '.m4a', '.mp1', '.ogg', '.wav', '.xm', '.3gp', '.srt', '.wmv', '.ac3',
                '.asf', '.mod', '.mp2', '.mp3', '.mp4', '.wma', '.mka']
+media_path = getenv("HOME")+'/.rmsap_media_path.gz'
+playlist_path = '/tmp/rmsap_playlist'
 
-media_path = getenv("HOME")+'/.rmsp_media_path.gz'
-playlist_path = '/tmp/playlist_rmsp'
+
+def search_media_path(words):
+    try:
+        with gzip.open(media_path) as f:
+            path_list = f.readlines()
+    except IOError:
+        print('I cant found your list of paths, please build it.')
+        print('You should execute: rmsap build-list FULL_PATH_OF_YOUR_MEDIA_FOLDER')
+        exit()
+    result = []
+    for path in path_list:
+        count = 0
+        for word in words:
+            if word in path.lower():
+                count = count + 1
+        if count == len(words):
+            result.append(path)
+    return result
 
 if argv[1] == 'build-list':
     import subprocess
     import os.path
     proc = subprocess.Popen(['find', argv[2]], stdout=subprocess.PIPE)
     lista = gzip.open(media_path, 'wb')
-
     while True:
         line = proc.stdout.readline()
         if line != '':
@@ -33,21 +50,39 @@ if argv[1] == 'build-list':
 if argv[1] == 'play':
     from subprocess import call
     words = []
-
     for i in argv[2:]:
         words.append(i.lower())
-
-    with gzip.open(media_path) as f:
-        path_list = f.readlines()
-
     playlist = open(playlist_path, 'w')
-    for path in path_list:
-        print path
-        count = 0
-        for word in words:
-            if word in path.lower():
-                count = count + 1
-        if count == len(words):
-            playlist.write(path+'\n')
+    lista = search_media_path(words)
+    for path in lista:
+            playlist.write(path)
     playlist.close()
     call(['mplayer', '-playlist', playlist_path])
+
+if argv[1] == 'search':
+    words = []
+    for i in argv[2:]:
+        words.append(i.lower())
+    lista = search_media_path(words)
+    all_paths = ''
+    for path in lista:
+        print(path.strip('\n'))
+
+if argv[1] == 'help':
+    help_text = '''RMSaP 1.0
+Usage: rmsap [command] [search patterns]
+
+rmsap play [search patterns]                         - Search media and play.
+rmsap search [search patterns]                       - Search media and print paths.
+rmsap build-list [FULL_PATH_OF_YOUR_MEDIA_FOLDER]    - Build your media list.
+
+You can concatenate how many search patterns you need, using just spaces between them.
+
+Examples:
+rmsap build-list /home/user/Music
+rmsap search vivaldi spring
+rmsap play chopin nocturne 2 d
+rmsap play mozart 40
+rmsap play bach
+'''
+    print help_text
