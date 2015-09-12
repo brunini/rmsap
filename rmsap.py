@@ -85,4 +85,4 @@ rmsap play chopin nocturne 2 d
 rmsap play mozart 40
 rmsap play bach
 '''
-    print help_text
+    print(help_text)
