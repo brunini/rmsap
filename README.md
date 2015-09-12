@@ -1,4 +1,4 @@
-# rmsp
+# RMSaP 1.0
 Ridiculous Media Search and Play
 
 The objective of this CLI Tool is do a fast search of media files and just play instantly 
@@ -24,7 +24,7 @@ rmsap build-list [FULL_PATH_OF_YOUR_MEDIA_FOLDER]    - Build your media list.
 You can concatenate how many search patterns you need, using just spaces
 between them.
 
-Examples:
+# Examples
 
 rmsap build-list /home/user/Music
 
