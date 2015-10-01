@@ -62,7 +62,7 @@ if argv[1] == 'play':
             playlist.write(path)
     playlist.close()
     if len(lista) > 0:
-        call(['mplayer', '-playlist', playlist_path])
+        call(['mpv', '-playlist', playlist_path])
     else:
         print('No matches found')
 
