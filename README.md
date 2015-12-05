@@ -5,9 +5,9 @@ The objective of this CLI Tool is do a fast search of media files and just play 
 using only native python libraries in a unix-like environment. If you really
 want play something you should consider install mpv.
 
-This software don't read ID3 Tags, don't use any type of standard database, and don't play anything
+This software read some ID3 Tags, and use whoosh to index, but, don't play anything
 using libraries like pygst, because as you can see, that is not the objective of
-the application at all. 
+the application at all.
 
 To Install you can link or copy to your path.
 

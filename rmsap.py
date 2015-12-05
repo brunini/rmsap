@@ -40,7 +40,11 @@ if argv[1] == 'build-list':
     t0 = time.time()
     import taglib
     print('Building list, this can take long. Go look your WhatsApp.')
-    os.mkdir(media_path)
+    try:
+        os.mkdir(media_path)
+    except OSError:
+        print('You already have a list, please delete the file ' + media_path +
+              ' if you want to create another.')
     ix = create_in(media_path, schema)
     writer = ix.writer()
     full_path = unicode(argv[2])
@@ -81,7 +85,7 @@ if argv[1] == 'search':
         print(path)
 
 if argv[1] == 'help':
-    help_text = '''RMSaP 1.0
+    help_text = '''RMSaP 1.1
 Usage: rmsap [command] [search patterns]
 
 rmsap play [search patterns]                         - Search media and play.
